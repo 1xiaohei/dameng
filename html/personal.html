@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/personal.css">
+  <link rel="stylesheet" href="../css/iconfont.css">
+  <script src="../js/iconfont.js"></script>
+  <script src="../js/vue.js"></script>
+  <title>personal</title>
+</head>
+<body>
+  <div id="app" class="personal">
+    <section class="person-main">
+      <header class="p-m-head">
+        <img src="../img/xigua.png" alt="" class="h-logo">
+        <ul class="h-nav">
+          <li>Dashboard</li>
+          <li>Services</li>
+          <li>History</li>
+          <li>Actions</li>
+          <li class="h-n-search">
+            <form class="search-action">
+              <input type="text" class="search" placeholder="search...">
+              <i class="iconfont icon-sousuo"></i>
+            </form>
+          </li>
+        </ul>
+      </header>
+      <section class="p-m-cards">
+        <p class="c-head">
+          <span class="c-h-fl">Cards</span>
+          <span class="c-h-fr">View all cards</span>
+        </p>
+        <div class="card-list">
+          <div class="card-item" v-for="item in cardList" :key="item.id">
+            <p class="available-balance">Available balance</p>
+            <p class="balance">${{item.balance}}</p>
+            <p class="card-num">{{item.cardNumber}}</p>
+            <div class="bottom-msg">
+              <span class="bank">Monzo</span>
+              <p>
+                <span class="spot"></span>
+                <span class="spot spot-yellow"></span>
+              </p>
+            </div>
+          </div>
+          <div class="card-item add-card">
+            <i class="iconfont icon-jikediancanicon09"></i>
+            <p class="new-card">Add New Card</p>
+          </div>
+        </div>
+      </section>
+      <section class="main-detail">
+        <div class="main-services">
+          <p class="m-s-head">
+            <span class="m-s-fl">Main Services</span>
+            <span class="m-s-fr">View all</span>
+          </p>
+          <div class="service-list">
+            <p class="service-item">
+              <i class="iconfont icon-jiaohuan"></i>
+              <span class="title">Transactions</span>
+            </p>
+            <p class="service-item">
+              <i class="iconfont icon-dengpao"></i>
+              <span class="title">Utility</span>
+            </p>
+            <p class="service-item">
+              <i class="iconfont icon-daikuan"></i>
+              <span class="title">Loans</span>
+            </p>
+            <p class="service-item">
+              <i class="iconfont icon-cunkuan"></i>
+              <span class="title">Deposits</span>
+            </p>
+            <p class="service-item">
+              <i class="iconfont icon-kuaisuzhuanhuan"></i>
+              <span class="title">Fast transfer</span>
+            </p>
+            <p class="service-item">
+              <i class="iconfont icon-jiaohuan"></i>
+              <span class="title">Exchange</span>
+            </p>
+          </div>
+        </div>
+        <div class="revenue-detail">
+          <section class="r-d-current">
+            <p class="r-d-c-head">
+              <span class="r-d-c-fl">Current</span>
+              <span class="r-d-c-fr">View all</span>
+            </p>
+            <div class="c-list">
+              <p class="c-item" v-for="item in currentLists" :key="item.id">
+                <span class="c-i-sn">{{item.sn}}</span>
+                <span class="c-i-dash"></span>
+                <span class="c-i-money">${{item.money}}</span>
+              </p>
+            </div>
+          </section>
+          <section class="r-d-save">
+            <p class="r-d-s-head">
+              <span class="r-d-s-fl">Savings</span>
+              <span class="r-d-s-fr">View all</span>
+            </p>
+            <div class="chart">
+              <div id="line" class="line-chart"></div>
+              <div class="right-data">
+                <li class="right-item" v-for="summary in summaryList" :key="summary.id">
+                  <span class="data-fl">{{getSummaryType(summary.type)}}</span>
+                  <span class="data-fr">${{summary.money}}</span>
+                </li>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+    <section class="person-private">
+      <header class="p-p-head">
+        <p class="h-msg">
+          
+          <i class="iconfont icon-lingdang"></i>
+          <b class="red"></b>
+        </p>
+        <p class="h-name-avatar">
+          <span class="name">dsda</span>
+          <img src="../img/xigua.png" alt="" class="avatar">
+        </p>
+      </header>
+      <div class="circle">
+        <div id="circle"></div>
+      </div>
+      <div class="transactions">
+        <p class="t-head">
+          <span class="t-fl">Transactions</span>
+          <span class="t-fr">Today<i class="iconfont icon-xiangyouanniu-copy-copy"></i></span>
+        </p>
+        <ul>
+          <li class="t-item">
+            <span class="item-icon"><i class="iconfont icon-lanqiu-"></i></span>
+            <span class="text">Dribble Pro Plan</span>
+            <span class="income">$100</span>
+          </li>
+          <li class="t-item">
+            <span class="item-icon"><i class="iconfont icon-lanqiu-"></i></span>
+            <span class="text">Dribble Pro Plan</span>
+            <span class="income">$100</span>
+          </li>
+          <li class="t-item">
+            <span class="item-icon"><i class="iconfont icon-lanqiu-"></i></span>
+            <span class="text">Dribble Pro Plan</span>
+            <span class="income">$100</span>
+          </li>
+        </ul>
+      </div>
+      <p class="transfer-money">
+        <span class="t-m-text">Transfer Money</span>
+        <i class="iconfont icon-iconset0416"></i>
+      </p>
+      <i class="iconfont icon-kefu"></i>
+    </section>
+    
+    
+  </div>
+  
+  <script src="../js/valid.js"></script>
+  
+  <script src="../js/echarts.js"></script>
+  
+  
+  <script>
+    new Vue({
+      el: "#app",
+      data: {
+        cardList: [
+          {
+            id: 1,
+            balance: 1000,
+            cardNumber: 1234567812345678
+          },
+          {
+            id: 2,
+            balance: 1000.0,
+            cardNumber: 1234567812345678
+          },
+          {
+            id: 3,
+            balance: 1000.0,
+            cardNumber: 1234567812345678
+          }
+        ],
+        currentLists:[
+          {
+            id: 1,
+            sn: 10432456342,
+            money: 20339
+          },
+          {
+            id: 2,
+            sn: 10432456342,
+            money: 20339
+          }
+        ],
+        saveLists: [
+          {
+
+          }
+        ],
+        summaryList: [ //1-total 2-week 3-month
+          {
+            id: 1,
+            type: 1,
+            money: 100
+          },
+          {
+            id: 2,
+            type: 2,
+            money: 100
+          },
+          {
+            id: 3,
+            type: 3,
+            money: 100
+          },
+        ]
+      },
+      mounted() {
+        this.changeNum();
+        this.drawLine('line', '年卡销售额', [ '一季度', '二季度', '三季度', '四季度' ], '销售额', [ 120, 232, 471, 83 ]);
+        this.drawCircle();
+      },
+      methods:{
+        changeNum() {
+          this.cardList = this.cardList.slice(0,2);
+          this.cardList.map(item => {
+            item.balance = toThousands(item.balance);
+            item.cardNumber = toSecretNum(item.cardNumber);
+          })
+        },
+        getSummaryType(type) {
+          switch (type) {
+            case 1 || '1':
+              return 'Total'
+            case 2 || '2':
+              return 'This week'
+            case 3 || '3':
+              return 'This month'
+            default:
+              return 'Total'
+          }
+        },
+        /**
+         * 画折线图
+         * @param container 容器
+         * @param titleName 标题
+         * @param xData x轴数据
+         * @param seriesName 图表名称
+         * @param seriesData 图表数据
+         */
+        drawLine(container, titleName, xData, seriesName, seriesData) {
+          let myChart = echarts.init(document.getElementById('line'));
+          myOption = {
+            color: ['#6a7985'],
+            //标题样式
+            title: {
+              text: titleName,
+              textStyle: {
+                color: 'white',
+              },
+              left: 'center'
+            },
+            //菜单
+            legend: {
+              show: false
+            },
+            //提示框
+            tooltip: {
+              trigger: 'axis',
+              position: 'top',
+              axisPointer: {
+                type: 'cross',
+                label: {
+                  backgroundColor: '#6a7985'
+                }
+              }
+            },
+            //图形位置
+            grid: {
+              // left: '2%',
+              right: '2%',
+              bottom: '4%',
+              top: 10,
+              containLabel: true
+            },
+            //x轴
+            xAxis: [{
+              type: 'category',
+              //坐标轴两边留白策略，即x轴坐标点开始与结束点位置都不在最边缘
+              boundaryGap: true,
+              axisLine: {
+                show: true,
+                //x轴线样式
+                lineStyle: {
+                  color: '#17273B',
+                  width: 1,
+                  type: 'solid'
+                }
+              },
+              //x轴字体设置
+              axisLabel: {
+                show: true,
+                fontSize: 12,
+                color: 'white'
+              },
+              data: xData
+            }],
+            //y轴
+            yAxis: [{
+              type: 'value',
+              //y轴字体设置
+              axisLabel: {
+                show: true,
+                color: 'white',
+                fontSize: 12
+              },
+              //y轴线设置不显示
+              axisLine: {
+                // show: false
+              },
+              //与x轴平行的线样式
+              splitLine: {
+                show: true,
+                lineStyle: {
+                  color: '#999999',
+                  width: 1,
+                  type: 'dashed',
+                }
+              }
+            }],
+            series: [{
+              name: seriesName,
+              type: 'line',
+              //折线平滑
+              smooth: true,
+              symbol: 'circle',
+              symbolSize: 6,
+              //线条样式
+              lineStyle: {
+                color: {
+                  type: 'linear',
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [{
+                    offset: 0,
+                    // 0% 处的颜色
+                    color: '#6ae6dd'
+                  }, {
+                    offset: 1,
+                    // 100% 处的颜色
+                    color: 'red'
+                  }],
+                  globalCoord: false
+                },
+                width: 2,
+                type: 'solid',
+              },
+              //折线连接点样式
+              itemStyle: {
+                color: '#00E5DE'
+              },
+              //折线堆积区域样式
+              // areaStyle: {
+              //   color: '#004c5E'
+              // },
+              data: seriesData
+            }]
+          };
+          myChart.setOption(myOption);
+        },
+        drawCircle() {
+          let myChart = echarts.init(document.getElementById("circle"));
+          myChart.setOption({
+            tooltip: {
+              trigger: "item",
+              formatter: '{d}%\n{b}',
+            },
+            //图例组件
+            // legend: {
+            //     orient: 'vertical',
+            //     x:'right',
+            //     padding:[20,20,0,0], 
+            //     selectedMode: false,
+            //     icon:"circle",
+            //     align:'left',
+            // },
+            //全局颜色样式
+            color: [ "#e94f54", "#409EFF", "#166AC1","#68A4E2","#68A4E2"],
+            series: [
+              {
+                name: "地区交易金额",
+                type: "pie",
+                radius: ["40%", "52%"],//圆环大小
+                center: ["44%", "50%"],//图表的位置
+                avoidLabelOverlap: false,//是否启用防止标签重叠策略
+                hoverAnimation:false,//动画效果
+                labelLine: {
+                  show: false
+                },
+                label: {
+                  show: false,
+                  position: 'center'
+                },
+                // label: {
+                //   formatter: '{d}%',// 显示百分比，
+                // },
+                // 指示折现
+                // labelLine: {
+                //   normal: {
+                //     show: true,
+                //     legend: 8,//第一条折现
+                //     legend2: 15,//第二条折现
+                //     lineStyle: {
+                //       color: "#166AC1"//折现颜色
+                //     },
+                //   }
+                // },
+                data: [
+                  { value: 335, name: "1" },
+                  { value: 310, name: "2" },
+                  { value: 234, name: "3" },
+                  { value: 135, name: "4" }
+                ]
+              }
+            ]
+          });
+        }
+      }
+    })
+  </script>
+</body>
+</html>
